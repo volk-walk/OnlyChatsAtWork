@@ -23,7 +23,7 @@ public class Server {
         try {
             //Создаем серверный сокет
             server = new ServerSocket(PORT);
-            System.out.println("Server started");
+            System.out.println("Сервер запустился");
 
             // в бесконечном цикле ждем подключения к серверу
             while (true) {
@@ -33,7 +33,7 @@ public class Server {
                 System.out.println("Client connected" + socket.getRemoteSocketAddress());
 
                 //при подключении добавляем клиента в список их хранения
-                subscribe(new ClientHandler(this, socket));
+                new ClientHandler(this, socket);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,9 +47,10 @@ public class Server {
         }
     }
     //метод отправки сообщения клиента всем подключенным к этому серверу клиентам
-    public void broadcastMessage(String msg) {
+    public void broadcastMessage(ClientHandler sender, String msg) {
+        String message = String.format("%s: %s", sender.getNickname(), msg);
         for (ClientHandler c : clients) {
-            c.sendMessage(msg);
+            c.sendMessage(message);
         }
     }
     //метод добавления клиентов в список при подключении

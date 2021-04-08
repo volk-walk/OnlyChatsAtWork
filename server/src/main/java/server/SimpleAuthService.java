@@ -5,12 +5,13 @@ import java.util.List;
 
 public class SimpleAuthService implements AuthService {
 
-
+    //внутренний класс юзеров имеющих логин, пароль и ник
     private class User {
         String login;
         String password;
         String nickname;
 
+        //конструктор юзеров
         public User(String login, String password, String nickname) {
             this.login = login;
             this.password = password;
@@ -19,7 +20,10 @@ public class SimpleAuthService implements AuthService {
         }
     }
 
+    //создаем List юзеров (вложенного класса)
     private List<User> users;
+
+    //добавляем в этом методе Юзеров в наш List
     public SimpleAuthService() {
         users = new ArrayList<>();
         users.add(new User("qaz", "qaz", "qaz"));
@@ -29,6 +33,9 @@ public class SimpleAuthService implements AuthService {
             users.add(new User("log" + i, "pas" + i, "nick" + i));
         }
     }
+
+    //возвращаем nickname юзеров по совпадению логина и пароля, если находим такие совпадения
+    //если совпадений нет, возвращаем null
     @Override
     public String getNicknameByLoginAndPassword(String login, String password) {
 
